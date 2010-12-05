@@ -55,7 +55,7 @@ namespace NMaier.SmallPix
 
         private Watcher(string[] args)
         {
-            Console.WriteLine("SmallPixWatcher - Delete SmallPix on the fly");
+            Console.WriteLine("SmallPix - Delete small pix on the fly");
             Console.WriteLine("Copyright (c) 2006-2007,2009-2010 Nils Maier, MIT-License");
             Console.WriteLine();
 
@@ -96,7 +96,7 @@ namespace NMaier.SmallPix
                 return;
             }
 
-            Console.Title = "SmallPixWatcher...";
+            Console.Title = "SmallPix";
 
             Console.WriteLine("Target image dimensions: {0}", opts.Dimensions);
 
