@@ -47,7 +47,7 @@ namespace NMaier.SmallPix
                 return -1;
             }
             int rv = (int)(rhs.f.Length - f.Length);
-            if (rv == 0)
+            if (rv != 0)
             {
                 return rv;
             }
