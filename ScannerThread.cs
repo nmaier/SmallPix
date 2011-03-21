@@ -14,12 +14,12 @@ namespace NMaier.SmallPix
         uint level = 0;
         uint days = 0;
 
-        public ScannerThread(string aPath, uint aTargetDims, bool aRecursive, uint aDays, bool aDryRun)
-            : this(new DirectoryInfo(aPath), aTargetDims, aRecursive, aDays, 0, aDryRun)
+        public ScannerThread(string aPath, uint aTargetDims, bool aRecursive, uint aDays, bool aDryRun, bool aLowPriority)
+            : this(new DirectoryInfo(aPath), aTargetDims, aRecursive, aDays, 0, aDryRun, aLowPriority)
         {
         }
-        private ScannerThread(DirectoryInfo aPath, uint aTargetDims, bool aRecursive, uint aDays, uint aLevel, bool aDryRun)
-            : base(aPath.FullName, aTargetDims, aDryRun)
+        private ScannerThread(DirectoryInfo aPath, uint aTargetDims, bool aRecursive, uint aDays, uint aLevel, bool aDryRun, bool aLowPriority)
+            : base(aPath.FullName, aTargetDims, aDryRun, aLowPriority)
         {
             days = aDays;
             recursive = aRecursive;
@@ -57,7 +57,7 @@ namespace NMaier.SmallPix
                     {
                         return;
                     }
-                    children.Add(new ScannerThread(subdir, targetDims, true, days, level + 1, dryRun));
+                    children.Add(new ScannerThread(subdir, targetDims, true, days, level + 1, dryRun, LowPriority));
                 }
             }
             foreach (FileInfo file in info.GetFiles())

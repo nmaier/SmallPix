@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using NMaier.SmallPix.ImgFiles;
 using System.Threading;
+using NMaier.Interop;
 
 namespace NMaier.SmallPix
 {
@@ -61,18 +62,32 @@ namespace NMaier.SmallPix
         protected string path;
         protected uint targetDims;
         protected bool dryRun = false;
-        public BaseThread(string aPath, uint aTargetDims, bool aDryRun)
+        private bool lowPriority = false;
+        protected bool LowPriority { get { return lowPriority; } }
+        public BaseThread(string aPath, uint aTargetDims, bool aDryRun, bool aLowPriority)
         {
             dryRun = aDryRun;
             path = aPath;
             targetDims = aTargetDims;
-
+            lowPriority = aLowPriority;
         }
         protected static void threadProc(Object info)
         {
             try
             {
-                (info as BaseThread).Run();
+                BaseThread bt = (info as BaseThread);
+                if (bt.lowPriority)
+                {
+                    Thread.CurrentThread.Priority = ThreadPriority.Lowest;
+                    using (new LowPriority())
+                    {
+                        bt.Run();
+                    }
+                }
+                else
+                {
+                    bt.Run();
+                }
             }
             catch (Exception ex)
             {

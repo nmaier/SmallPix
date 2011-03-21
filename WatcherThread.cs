@@ -10,8 +10,8 @@ namespace NMaier.SmallPix
     {
         private List<string> queue;
 
-        public WatcherThread(List<string> aQueue, string aPath, uint aTargetDims, bool aDryRun)
-            : base(aPath, aTargetDims, aDryRun)
+        public WatcherThread(List<string> aQueue, string aPath, uint aTargetDims, bool aDryRun, bool aLowPriority)
+            : base(aPath, aTargetDims, aDryRun, aLowPriority)
         {
             queue = aQueue;
             ThreadPool.QueueUserWorkItem(new WaitCallback(threadProc), this);

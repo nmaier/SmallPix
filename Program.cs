@@ -41,8 +41,11 @@ namespace NMaier.SmallPix
 
 
             [Argument(Helptext = "Only files created within the last X days", Helpvar = "X")]
-            [ShortArgument('l')]
             public uint days = 0;
+
+            [Argument("lp", Helptext = "Run with low priority")]
+            [ShortArgument('l')]
+            public bool lowPriority = false;
 
             [Argument("dry-run", Helptext = "Dry-run (no deletion)")]
             public bool dryRun = false;
@@ -136,7 +139,7 @@ namespace NMaier.SmallPix
                 }
                 if (opts.Scan)
                 {
-                    threads.Add(new ScannerThread(path, opts.Dimensions, opts.Recursive, opts.days, opts.dryRun));
+                    threads.Add(new ScannerThread(path, opts.Dimensions, opts.Recursive, opts.days, opts.dryRun, opts.lowPriority));
                 }
 #else
                 threads.Add(new ScannerThread(path, opts.Dimensions, opts.Recursive, opts.days, opts.dryRun));
@@ -168,7 +171,7 @@ namespace NMaier.SmallPix
                 }
                 queue.Add(file);
             }
-            WatcherThread thread = new WatcherThread(queue, file, opts.Dimensions, opts.dryRun);
+            WatcherThread thread = new WatcherThread(queue, file, opts.Dimensions, opts.dryRun, opts.lowPriority);
         }
         private void OnChanged(Object source, FileSystemEventArgs e)
         {
