@@ -59,7 +59,7 @@ namespace NMaier.SmallPix
         private Watcher(string[] args)
         {
             Console.WriteLine("SmallPix - Delete small pix on the fly");
-            Console.WriteLine("Copyright (c) 2006-2007,2009-2010 Nils Maier, MIT-License");
+            Console.WriteLine("Copyright (c) 2006-2007,2009-2011 Nils Maier, MIT-License");
             Console.WriteLine();
 
             try
