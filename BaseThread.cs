@@ -21,7 +21,7 @@ namespace NMaier.SmallPix
             set
             {
                 aborted = value;
-                foreach (ScannerThread child in children)
+                foreach (BaseThread child in children)
                 {
                     child.Aborted = aborted;
                 }
